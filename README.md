@@ -1,4 +1,4 @@
-#ci-blog
+# ci-blog
 
  Simple blog Application written with CodeIgniter (this application develop based on videos tutorial with some changes )
  
