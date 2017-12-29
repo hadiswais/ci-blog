@@ -72,13 +72,20 @@ class Posts extends CI_Controller
         }
     }
 
-    public function delete($post_id)
+    public function delete($slug)
     {
+
         if (!$this->session->userdata('logged_in')) {
-            redirect('users/login');
+            redirect('posts/') . $slug;
         }
 
-        $this->post_model->delete_post($post_id);
+        $data['post'] = $this->post_model->get_posts($slug);
+
+        if ($this->session->userdata('user_id') !== ($data['post']['user_id'])) {
+            redirect('posts/') . $slug;
+        }
+
+        $this->post_model->delete_post($data['post']['id']);
         $this->session->set_flashdata('post_deleted', 'Your post has been deleted');
         redirect('posts');
     }
@@ -86,10 +93,15 @@ class Posts extends CI_Controller
     public function edit($slug)
     {
         if (!$this->session->userdata('logged_in')) {
-            redirect('users/login');
+            redirect('posts/') . $slug;
         }
 
         $data['post'] = $this->post_model->get_posts($slug);
+
+        if ($this->session->userdata('user_id') !== ($data['post']['user_id'])) {
+            redirect('posts/') . $slug;
+        }
+
         $data['categories'] = $this->post_model->get_categories();
 
         if (empty($data['post'])) {

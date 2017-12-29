@@ -37,7 +37,13 @@ class Categories extends CI_Controller
     public function delete($id)
     {
         if (!$this->session->userdata('logged_in')) {
-            redirect('users/login');
+            redirect('categories/');
+        }
+
+        $data['cat'] = $this->category_model->get_category($id);
+
+        if ($this->session->userdata('user_id') !== ($data['cat']->user_id)) {
+            redirect('categories/');
         }
 
         $this->category_model->delete_category($id);

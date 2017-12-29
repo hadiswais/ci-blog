@@ -25,10 +25,11 @@ class Post_model extends CI_Model
     {
         $slug = url_title($data['title']);
         $arr_data = array(
+            'user_id ' => $this->session->userdata('user_id'),
+            'category_id' => $data['category_id'],
             'title' => $data['title'],
             'slug' => $slug,
             'body' => $data['body'],
-            'category_id' => $data['category_id'],
             'post_image' => $post_image,
         );
         return $this->db->insert('posts', $arr_data);

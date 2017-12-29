@@ -10,10 +10,11 @@ class Comments extends CI_Controller
         $data['post'] = $this->post_model->get_posts($slug);
 
         $this->form_validation->set_rules('name', 'Name', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('body', 'Body', 'required');
 
         if ($this->form_validation->run() === false) {
+            $data['comments'] = false;
             $data['main_content'] = 'posts/view';
             $this->load->view('includes/template', $data);
         } else {

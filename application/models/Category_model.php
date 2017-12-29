@@ -19,6 +19,7 @@ class category_model extends CI_Model
     public function create_category($data)
     {
         $arr_data = array(
+            'user_id ' => $this->session->userdata('user_id'),
             'name' => $data['name'],
         );
         return $this->db->insert('categories', $arr_data);
